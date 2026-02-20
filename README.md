@@ -45,6 +45,6 @@ https://monolixsuite.slp-software.com/monolix/2024R1/example
 ### Bedaquiline
 
 
-## DDMore
+## DDMoRe Foundation Data
 
 https://github.com/dpastoor/ddmore_scraping
