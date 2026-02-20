@@ -32,6 +32,8 @@ https://pubmed.ncbi.nlm.nih.gov/9009936/  <- closest 1:1 with our first series o
 https://monolixsuite.slp-software.com/monolix/2024R1/example
 
 
+### Solely PK data
+
 ## Theophylline (Theoph)
 
 
@@ -39,3 +41,6 @@ https://monolixsuite.slp-software.com/monolix/2024R1/example
 
 
 ## Bedaquiline
+
+
+## DDMore
