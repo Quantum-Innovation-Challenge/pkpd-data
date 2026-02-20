@@ -30,3 +30,12 @@ https://pubmed.ncbi.nlm.nih.gov/9009935/
 https://pubmed.ncbi.nlm.nih.gov/9009936/  <- closest 1:1 with our first series of question on the generated dataset
 
 https://monolixsuite.slp-software.com/monolix/2024R1/example
+
+
+## Theophylline (Theoph)
+
+
+## Moxifloxacin
+
+
+## Bedaquiline
