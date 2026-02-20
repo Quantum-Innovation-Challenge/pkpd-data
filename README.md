@@ -71,3 +71,5 @@ https://github.com/dpastoor/ddmore_scraping/tree/master/219
 ## DDMoRe Foundation Data and other datasets
 
 https://github.com/dpastoor/ddmore_scraping
+
+https://github.com/dpastoor/PKPDdatasets
