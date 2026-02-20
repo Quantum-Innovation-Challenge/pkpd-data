@@ -45,7 +45,7 @@ https://monolixsuite.slp-software.com/monolix/2024R1/example
 
 ## Solely PK data
 
-### Theophylline (Theoph)
+### Theophylline
 
 
 ### Moxifloxacin
