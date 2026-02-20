@@ -1,0 +1,220 @@
+;; 1. Based on: run674
+;; 2. Description: BDQ + M2 and interacting drugs: lopinavir/ritonavir
+;; x1. Author: Elin Svensson
+
+
+$PROB BDQ and M2 popPK with LPV/r
+$INPUT STUDY DROP ID DUMID DROP PERIOD STUDYDAY DAT2=DROP TIME TAD TMCDOSE EVID MDV AMT DROP FLAG CMT DVMG LNDVMG DVMOL DV L2 ZEROO LLOQ BQL SEX RACE DROP AGE METAB HT  WT ALB HIV DROP COMEDNUM IND
+$DATA Simulated_data_BDQ_M2_PK_DDI_with_LPV-RTV.csv IGNORE=@ IGNORE(FLAG.GE.4) IGNORE(BQL.EQ.1) 
+
+$SUBROUTINE ADVAN6 TOL=6
+
+$MODEL NCOMPARTMENTS=8
+COMP=(DEPOT DEFDOSE)
+COMP=(CENTRAL DEFOBSERVATION)
+COMP=(PERI1)
+COMP=(PERI2)
+COMP=(M2)
+COMP=(M3)
+COMP=(M2P1)
+COMP=(M3P1)
+
+$PK
+;--- Typical values fixed effects
+TVMTT = 	THETA(1)
+TVKA=		THETA(2)
+TVCLE=		THETA(3)
+TVV=		THETA(4)
+TVQ1 =		THETA(5)
+TVVP1 = 	THETA(6)
+TVQ2 =		THETA(7)
+TVVP2 = 	THETA(8)
+TVCLM2E = 	THETA(9)
+TVVM2 = 	THETA(10)
+TVQ1M2 = 	THETA(11)
+TVVP1M2 = 	THETA(12)
+TVEFF1 = 	THETA(13)
+TVEFF2 = 	THETA(14)
+ETASCALE =  THETA(17)
+
+
+;--- Variability
+BOVF = ETA(1)
+IF(TMCDOSE.EQ.2) BOVF = ETA(2)
+BSVF = ETA(3)
+
+BOVMTT =	ETA(4)
+IF(TMCDOSE.EQ.2) BOVMTT =	ETA(5)
+
+BSVCL=		ETA(6)
+BSVCLM2=	ETA(7)
+BSVEFF1 =	ETA(8)
+BSVV=		ETA(9)
+BSVQ1=		ETA(10)
+BSVVM2=		ETA(11)
+BSVVP1M2=	ETA(12)
+
+
+; Allomertic scaling
+ALLCL = (WT/70)**0.75
+ALLV= WT/70
+
+
+;--- Parameters
+EFF1 = TVEFF1*EXP(BSVEFF1)
+EFF2 = TVEFF2*EXP(ETASCALE*BSVEFF1)
+KA = 		TVKA
+MTT =	 	TVMTT*EXP(BOVMTT)
+CL = 		TVCLE*ALLCL*EXP(BSVCL)
+IF(IND.EQ.1)  CL =  TVCLE*ALLCL*EXP(BSVCL)*EFF1 ; IND  the time-point where interaction effect kicks in, regulated by dummy records in dataset 
+V = 		TVV*ALLV*EXP(BSVV)
+Q1= 		TVQ1*ALLCL*EXP(BSVQ1)
+VP1 = 		TVVP1*ALLV
+Q2 = 		TVQ2*ALLCL
+VP2= 		TVVP2*ALLV
+CLM2 = 		TVCLM2E*ALLCL*EXP(BSVCLM2)
+IF(IND.EQ.1) CLM2 = TVCLM2E*ALLCL*EXP(BSVCLM2)*EFF2
+VM2= 		TVVM2*ALLV*EXP(BSVVM2)
+Q1M2 = 		TVQ1M2*ALLCL
+VP1M2= 		TVVP1M2*ALLV*EXP(BSVVP1M2)
+
+
+;--- Scaling factors
+S2=V
+S3=VP1
+S4=VP2
+S5=VM2
+
+
+;--- To stratify VPC and calc TAD in days/weeks
+STRT = IND+2*FLAG
+
+VPCLOC = 0
+IF(STRT.EQ.2) VPCLOC= 3
+IF(STRT.EQ.3) VPCLOC= 1
+IF(STRT.EQ.4) VPCLOC= 4
+IF(STRT.EQ.5) VPCLOC= 2 
+
+TADD = TAD/24
+TADW = TAD/(24*7)
+
+;--- Transit model
+
+IF (NEWIND.NE.2.OR.EVID.GE.3) THEN ; beginning of dataset, or new individual
+TNXD=TIME ; TIME will be the time of the first record of that subject even if it's not a dose, but...
+PNXD=AMT ; ...the amount will be 0 if the first record is not a dose, so no problem.
+ENDIF
+
+TDOS=TNXD ; This will either save here the temporary values if it's a new individual...
+PD=PNXD ; ...or the values which were read one record ahead during the execution of the previous record.
+
+IF(AMT.GT.0) THEN ; This reads one record ahead and stores the data to be used when running the following record
+TNXD=TIME
+PNXD=AMT
+ENDIF
+
+IF (DOSTIM.GT.0) THEN ; This will account for the ADDL or lagged doses
+TNXD=DOSTIM
+PNXD=AMT
+ENDIF
+
+F1=0                ; Nothing goes directly in to compartment 1
+BIO=720.072*EXP(BOVF+BSVF) ; AMT=1 in input file, dose was 400 mg, MW TMC207 555.5 g/mol, DV as nmol/mL = µmol/L --> (400/1000)/(555.5)*1000000 = 720.1 µmol
+
+NN=THETA(15)
+KTR=((NN+1)/MTT)
+L       = 0.9189385 + (NN + 0.5)*LOG(NN) - NN + LOG(1 + 1/(12*NN)) ; logarithm of the approximation to the gamma function
+
+
+;--- Shorter run time when calculations outside $des block
+BIOPD=BIO*PD
+IF (BIOPD.EQ.0) BIOPD=BIOPD+0.00001
+LBPD  = LOG(BIOPD)
+LKTR  = LOG(KTR)
+PIZZA = LBPD + LKTR - L
+
+
+$DES
+TEMPO=T-TDOS ; this is time after dose, it should always be >= 0
+
+IF(TEMPO.GT.0) THEN
+	KTT=KTR*TEMPO
+	DADT(1) = EXP(PIZZA+NN*LOG(KTT)-KTT) -A(1)*KA
+ELSE
+	DADT(1)=0 ; I believe this is executed only when TEMPO=0, or before the first dose is given
+ENDIF
+
+DADT(2) = A(1)*KA - A(2)*CL/V - A(2)*Q1/V + A(3)*Q1/VP1 - A(2)*Q2/V + A(4)*Q2/VP2
+DADT(3) = A(2)*Q1/V - A(3)*Q1/VP1
+DADT(4) = A(2)*Q2/V - A(4)*Q2/VP2
+DADT(5) = A(2)*CL/V - A(5)*CLM2/VM2 - A(5)*Q1M2/VM2 + A(6)*Q1M2/VP1M2  			; M2
+DADT(6) = A(5)*Q1M2/VM2 - A(6)*Q1M2/VP1M2
+
+
+$ERROR
+DEL= 1E-12
+
+IPRED=LOG(F+DEL)
+
+ABSERR = THETA(16)
+
+W = 1
+IF(TAD.LE.6) W= W*ABSERR
+
+IRES=DV-IPRED
+IWRES=IRES/W
+
+Y = IPRED + W*EPS(1)
+IF(FLAG.EQ.2) Y = IPRED + W*EPS(2)
+
+A2 = A(2)
+A5 = A(5)
+
+$THETA  (1E-06,1.0216) ; 1 MTT
+ (1E-06,0.0983215) ; 2 KA
+ (1E-06,3.08659) ; 3 CL
+ (1E-06,16.1031) ; 4 V
+ (1E-06,5.9652) ; 5 Q1
+ (1E-06,4887.29) ; 6 VP1
+ (1E-06,3.52079) ; 7 Q2
+ (1E-06,174.279) ; 8 VP2
+ (1E-06,14.613) ; 9 CLM2
+ (1E-06,745.574) ; 10 VM2
+ (1E-06,75.5473) ; 11 Q1M2
+ (1E-06,3140.65) ; 12 VP1M2
+ (0,0.347108,1) ; 13 EFF TMCCL
+ (0,0.57801,1) ; 14 EFF M2CL
+ (0,5.77145) ; 15 NN
+ (0,1.88972) ; 16 Weigting of samples <6h
+ (0,0.335066,10) ; 17 Scaling BSVEFF
+ 
+$OMEGA  BLOCK(1)
+ 0.0179504  ;  1   BOVF
+$OMEGA  BLOCK(1) SAME
+
+$OMEGA  0.00892459  ;  3   BSVF
+$OMEGA  BLOCK(1)
+ 0.50567  ; 4   BOVMTT
+$OMEGA  BLOCK(1) SAME
+
+$OMEGA  BLOCK(2)
+ 0.154301  ; 6   BSVCL
+ 0.122901 0.164411  ; 7 BSVCLM2
+$OMEGA  0.119544  ; 8 BSVEFF1, scaled to EFF2 (correlation ~1)
+ 0.22566  ; 9   BSVV
+ 0.0197162  ; 10  BSVQ1
+ 0.270379  ; 11  BSVVM2
+ 0.147666  ; 12  BSVVP1M2
+ 
+$SIGMA  BLOCK(2)
+ 0.0290542  ; 1 Prop error TMC
+ 0.013381 0.0208551  ; 2 Prop error M2
+$ESTIMATION METHOD=1 MAXEVAL=0 INTERACTION PRINT=1 SIGL=6 NSIG=2 PRINT=1 NOABORT MSFO=runX.msf
+;$COVARIANCE PRINT=E
+
+$TABLE ID STUDYDAY TIME TMCDOSE TAD TADD TADW EVID FLAG DV STRT VPCLOC PRED IPRED RES IRES WRES IWRES CWRES NPDE NOPRINT ONEHEADER NOAPPEND FILE=sdtabX
+$TABLE ID KA KTR NN MTT CL V Q1 VP1 Q2 VP2 CLM2 VM2 Q1M2 VP1M2 EFF1 EFF2 BOVF BOVMTT BSVF BSVCL BSVV BSVQ1 BSVCLM2 BSVVM2 BSVVP1M2 BSVEFF1  NOPRINT NOAPPEND ONEHEADER FILE=patabX
+$TABLE ID AGE HT WT ALB NOPRINT NOAPPEND ONEHEADER FILE=cotabX
+$TABLE ID IND COMEDNUM SEX RACE METAB BQL STRT NOPRINT NOAPPEND ONEHEADER FILE=catabX
+$TABLE ID STUDY STUDYDAY TIME TMCDOSE TAD TADD DV DVMG PRED IPRED RES IRES WRES IWRES CWRES NPDE EVID KA KTR NN MTT CL V Q1 VP1 Q2 VP2 CLM2 VM2 Q1M2 VP1M2 BOVF BOVMTT BSVF BSVCL BSVV BSVQ1 BSVCLM2 BSVVM2 BSVVP1M2
+BSVEFF1 A2 A5 FLAG STRT VPCLOC SEX WT COMEDNUM IND NOPRINT NOAPPEND ONEHEADER FILE=mytabX.tab
