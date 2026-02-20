@@ -53,6 +53,11 @@ Dataset:
 
 Dataset:
 
+https://rdrr.io/cran/nlmixr2data/man/theo_sd.html
+
+https://rdrr.io/github/nlmixr2/nlmixr2data/man/theo_md.html
+
+https://github.com/ggPMXdevelopment/ggPMX/tree/master/inst/testdata/theophylline
 
 
 ### Moxifloxacin
