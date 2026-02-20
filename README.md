@@ -6,7 +6,11 @@
 
 Dataset:
 
+https://github.com/nlmixr2/nlmixr2data/blob/main/data/warfarin.rda
+
 https://monolixsuite.slp-software.com/monolix/2024R1/warfarin-data-set
+
+https://search.r-project.org/CRAN/refmans/nlmixr2data/html/warfarin.html
 
 Ground truth studies/resources:
 
@@ -19,7 +23,7 @@ https://www.quantum-challenge.eu/challenge/
 https://www.quantum-challenge.eu/assets/QIC2025-EstDat.csv
 
 
-### Remifentanil:
+### Remifentanil
 
 Dataset:
 
@@ -41,7 +45,7 @@ https://monolixsuite.slp-software.com/monolix/2024R1/example
 
 ## Solely PK data
 
-### Theophylline (Theoph)
+### Theophylline
 
 
 ### Moxifloxacin
