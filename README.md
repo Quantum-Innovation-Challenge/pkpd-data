@@ -1,6 +1,8 @@
 # pkpd-data
 
-## Warfarin
+## PK/PD data
+
+### Warfarin
 
 Dataset:
 
@@ -17,7 +19,7 @@ https://www.quantum-challenge.eu/challenge/
 https://www.quantum-challenge.eu/assets/QIC2025-EstDat.csv
 
 
-## Remifentanil:
+### Remifentanil:
 
 Dataset:
 
@@ -32,15 +34,15 @@ https://pubmed.ncbi.nlm.nih.gov/9009936/  <- closest 1:1 with our first series o
 https://monolixsuite.slp-software.com/monolix/2024R1/example
 
 
-### Solely PK data
+## Solely PK data
 
-## Theophylline (Theoph)
-
-
-## Moxifloxacin
+### Theophylline (Theoph)
 
 
-## Bedaquiline
+### Moxifloxacin
+
+
+### Bedaquiline
 
 
 ## DDMore
