@@ -39,12 +39,12 @@ https://monolixsuite.slp-software.com/monolix/2024R1/example
 
 ### T-cell mAb Multiplesclerois
 
-Dataset:
+Dataset: https://github.com/Quantum-Innovation-Challenge/pkpd-data/tree/main/data/pk_pd/tcell_mAb_multiplesclerois
 
 
 ### Ciprofloxacin
 
-Dataset:
+Dataset: https://github.com/Quantum-Innovation-Challenge/pkpd-data/tree/main/data/pk_pd/ciprofloxacin
 
 
 ## Solely PK data
