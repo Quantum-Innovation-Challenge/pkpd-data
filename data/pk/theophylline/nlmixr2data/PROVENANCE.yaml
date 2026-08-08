@@ -1,0 +1,45 @@
+id: theophylline_nlmixr2
+title: "Theophylline PK, single dose (theo_sd) and multiple dose (theo_md)"
+
+license:
+  spdx: GPL-3.0-or-later
+  holder: "nlmixr2data authors (Matthew Fidler, Wenping Wang, et al.)"
+  verified: 2026-08-08
+  verified_by: "CRAN nlmixr2data DESCRIPTION: License GPL (>= 3)"
+  redistribution: permitted-with-attribution
+
+upstream:
+  url: https://github.com/nlmixr2/nlmixr2data/tree/main/data
+  origin: nlmixr2data (CRAN)
+  retrieved: unknown                   # predates provenance tracking
+
+content:
+  synthetic: false                     # classic Boeckmann/Sheiner/Beal study data
+  ground_truth_model: none
+  subjects: 12                         # 12 in each of theo_sd and theo_md
+  rows: {theo_sd: 144, theo_md: 348}
+  analytes: [theophylline]
+  columns: [ID, TIME, DV, AMT, EVID, CMT, WT]
+  censoring: none
+  role: development
+
+citation: >
+  Boeckmann AJ, Sheiner LB, Beal SL. NONMEM Users Guide: Part V. Introductory
+  Guide. Theophylline data as distributed with NONMEM and R (Theoph).
+
+files:
+  - path: theo_sd.rda
+    sha256: 394c4c2a669a97648ff2d87d16f96abd344784e3c2567bc6485e8f32586bf220
+  - path: theo_md.rda
+    sha256: 058275fd913ede58ceffd2ad7b6545c3e191802d02d36ba29ee81a2bb008613d
+
+notes: >
+  GPL-3.0-or-later. Development/validation material only: whether model weights
+  trained on copyleft data are a derivative work is unsettled in every
+  jurisdiction, so prefer the CC0 sets for publishable blind runs.
+  Read the .rda directly (e.g. the Python rdata package) rather than calling into
+  R — parsing the file format is not linking nlmixr2data; loading it via rpy2 may
+  be. Shapes above were read from the files, not from the package docs.
+  Note the theophylline in data/pk/theophylline/ggpmx/ is a DIFFERENT
+  redistribution of theophylline-like data under GPL-2.0-only, which is
+  incompatible with this one in a combined work. Keep them apart.

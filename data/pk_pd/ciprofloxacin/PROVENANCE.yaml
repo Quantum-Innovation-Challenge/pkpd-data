@@ -1,0 +1,50 @@
+id: ciprofloxacin
+title: "Ciprofloxacin PK/PD, in vitro time-kill (strain 378)"
+
+license:
+  spdx: CC0-1.0
+  holder: "DDMoRe Foundation model repository contributors"
+  verified: 2026-08-08
+  verified_by: "sha256 match against DDMoRe entry 225 in the ddmore_scraping mirror;
+                repository.ddmore.foundation terms of use (uploads/downloads under CC0)"
+  redistribution: permitted
+
+upstream:
+  url: https://github.com/dpastoor/ddmore_scraping/tree/master/225
+  origin: DDMoRe Model Repository (entry 225)
+  retrieved: unknown                   # original retrieval predates provenance tracking
+
+content:
+  synthetic: true                      # Executable_/simulated naming, .mod alongside
+  ground_truth_model: executeable_cipro_pkpd.mod
+  subjects: 9                          # experimental arms (ID), not human subjects
+  rows: 193
+  analytes: [ciprofloxacin, bacterial_count]
+  columns: [STR, ID, MIC, XMIC, CAB, TIME, TUBE, CMT, EVID, LNDV, AMT, FLG2, FLG1, BASE, L2, BOBS]
+  censoring: none
+  role: validation
+
+citation: >
+  Khan DD, Lagerback P, Cao S, Lustig U, Nielsen EI, Cars O, Hughes D,
+  Andersson DI, Friberg LE. A mechanism-based pharmacokinetic/pharmacodynamic
+  model allows prediction of antibiotic killing from MIC values for WT and
+  mutants. J Antimicrob Chemother. 2015;70(11):3051-60. doi:10.1093/jac/dkv233
+  (named in the control stream's $PROBLEM line: "Khan et al, JAC 2015")
+
+files:
+  - path: cipro378.csv
+    sha256: 4ee7eb01f0aa10fe24296f46c7f92c180b46e5ee192465cc5333439d9fefb4c6
+  - path: executeable_cipro_pkpd.mod
+    sha256: 7c4acd0da2be829dc0a9a05cb246ffe27ab4e0a73d35ae61f95928df435d6fa8
+
+notes: >
+  PROVENANCE CONFIRMED 2026-08-08, upgrading this record from "assumed DDMoRe".
+  Both files are byte-identical (sha256) to DDMoRe entry 225 as mirrored at
+  github.com/dpastoor/ddmore_scraping/tree/master/225, which also holds the
+  sibling files cipro202.csv, cipro_simulated.csv and the VPC model. DDMoRe
+  repository entries are uploaded and downloaded under CC0, so this is clean.
+  Caveat on the evidence: repository.ddmore.foundation itself returned HTTP 503
+  when checked on 2026-08-08, so the terms of use could not be re-read at source
+  and the CC0 basis rests on the mirror plus the previously recorded terms.
+  Bacterial counts are log-transformed (LNDV) with a baseline column — an
+  in vitro time-kill design, not a clinical cohort. Used by no solution repo.

@@ -1,0 +1,44 @@
+id: qic_phase3
+title: "QIC 2025 phase-3 released follow-up estimation data (synthetic PK/PD)"
+
+license:
+  spdx: CC0-1.0
+  holder: "Quantum Innovation Challenge"
+  verified: 2026-08-08
+  verified_by: "challenge organisers; data is organiser-generated, so they set the terms"
+  redistribution: permitted
+
+upstream:
+  url: https://www.quantum-challenge.eu/challenge/
+  origin: Quantum Innovation Challenge
+  retrieved: unknown                   # committed in 3f4cf7d "Push evaluation data"
+
+content:
+  synthetic: true
+  ground_truth_model: unknown          # organisers hold the generating model
+  subjects: 48
+  rows: 2820
+  analytes: [concentration, biomarker]
+  dose_levels_mg: [0.1, 0.3, 1.0]      # 36 active, 12 placebo
+  columns: [ID, BW, DOSE, TIME, DV, EVID, MDV, AMT, CMT, DVID]
+  dvid: {1: "compound concentration (mg/L)", 2: "biomarker (ng/mL)"}
+  censoring: none
+  role: evaluation_released            # released to participants — NOT blind
+
+citation: >
+  Quantum Innovation Challenge 2025, phase-3 follow-up dataset.
+  https://www.quantum-challenge.eu/challenge/
+
+files:
+  - path: UpdatedEstData.csv
+    sha256: bf5223804a1e91485fcf61104cde26af3b301632856d67a03b8a12f974ad93fa
+
+notes: >
+  RELEASED, THEREFORE NOT A BLIND HOLDOUT. This file is byte-identical to copies
+  committed in qpnu (Data/UpdatedEstData.csv) and pharmaceutiq
+  (data/UpdatedEstData.csv), and qpnu's README documents training on it for all
+  seven of its final runs. The directory name invites it to be treated as a
+  holdout; it is not one. See the plan's PR 3, which renames this directory to
+  data/qic/phase3_released/ — a rename deliberately left out of the licensing
+  change so the two concerns stay reviewable apart.
+  No COMED column, unlike the phase-1 set.

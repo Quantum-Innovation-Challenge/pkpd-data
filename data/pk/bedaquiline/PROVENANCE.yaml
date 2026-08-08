@@ -1,0 +1,58 @@
+id: bedaquiline
+title: "Bedaquiline / M2 PK with LPV-RTV drug-drug interaction"
+
+license:
+  spdx: CC0-1.0
+  holder: "DDMoRe Foundation model repository contributors"
+  verified: 2026-08-08
+  verified_by: "UNCONFIRMED — the README's entry-219 attribution does not hold
+                (see notes); CC0 now rests on DDMoRe naming convention alone"
+  redistribution: permitted
+
+upstream:
+  url: unknown                         # NOT ddmore_scraping/219 — see notes
+  origin: "assumed DDMoRe Model Repository; specific entry not identified"
+  retrieved: unknown                   # predates provenance tracking
+
+content:
+  synthetic: true
+  ground_truth_model: Executable_BDQ_M2_PK_DDI_with_LPV-RTV.mod
+  subjects: 16
+  rows: 3087
+  analytes: [TMC207, M2, LPV, RTV]
+  censoring: {bql_column: BQL, lloq_column: LLOQ, n_censored: 114}
+  role: validation
+
+citation: >
+  Svensson EM, Dooley KE, Karlsson MO. Impact of lopinavir-ritonavir or
+  nevirapine on bedaquiline exposures and potential implications for patients
+  with tuberculosis-HIV coinfection. Antimicrob Agents Chemother.
+  2014;58(11):6406-12. doi:10.1128/AAC.03246-14
+
+files:
+  - path: Simulated_data_BDQ_M2_PK_DDI_with_LPV-RTV.csv
+    sha256: b2586a3d70f713229dbd47ce53e5acbf89e72eeb5b6fd7163035136024b139dd
+  - path: Executable_BDQ_M2_PK_DDI_with_LPV-RTV.mod
+    sha256: 723200b7c1dd7a0283332fa23c6a7caf329cb2269386a4c62197a8431bfe32ec
+
+notes: >
+  PROVENANCE DOWNGRADED 2026-08-08 — this was the one dataset believed fully
+  verified, and it is not. The README attributes it to
+  github.com/dpastoor/ddmore_scraping/tree/master/219, but entry 219 holds a
+  DIFFERENT Svensson model (BDQ_M2_PK_plus_WT_ALB_in_MDR-TB_patients, the
+  time-varying weight/albumin paper), and neither file here appears anywhere in
+  that 641-file mirror. So the URL is wrong and the retrieval route is unknown.
+  What the control stream does establish: ";; x1. Author: Elin Svensson",
+  ";; 2. Description: BDQ + M2 and interacting drugs: lopinavir/ritonavir", and
+  ";; 1. Based on: run674" — identifying the study as AAC 2014;58(11):6406, which
+  is why the citation above was corrected (it previously named the 2013 efavirenz
+  paper, a different interaction study).
+  Practical effect: this dataset sits with tcell mAb and semimech antibiotics as
+  "assumed DDMoRe/CC0, unconfirmed" rather than confirmed. It is not blocked —
+  the DDMoRe naming convention is decent evidence — but do not describe it as
+  verified. Contrast ciprofloxacin, which was confirmed by sha256 against the
+  mirror.
+  Multi-analyte with real BQL censoring (114 records verified in the BQL column)
+  — the only dataset in the corpus exercising either capability. None of the
+  three solution repos handle them as of the pre-kubeflow baseline.
+  Used by no solution repo, so it is also a candidate transfer test.

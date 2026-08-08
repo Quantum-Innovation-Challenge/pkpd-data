@@ -1,0 +1,67 @@
+id: remifentanil
+title: "Remifentanil PK/PD (Minto et al. 1997), Monolix demo dataset"
+
+license:
+  spdx: LicenseRef-Unresolved-Monolix-Demo
+  holder: "NOASSERTION — Lixoft / Simulations Plus distribute it; rights unstated"
+  verified: 2026-08-08
+  verified_by: "none — see LICENSES/LicenseRef-Unresolved-Monolix-Demo.txt"
+  redistribution: unresolved
+
+upstream:
+  url: https://monolixsuite.slp-software.com/monolix/2024R1/remifentanil-data-set
+  origin: MonolixSuite demo datasets (Lixoft / Simulations Plus)
+  retrieved: unknown
+  alternative_source:                  # same subjects, better party to ask — see notes
+    url: http://opentci.org/data/remifentanil/minto-1997-study
+    origin: "Open TCI Initiative (Minto, Schnider, Shafer) — minto_remi.zip,
+             an archive of Steven Shafer's PK/PD software server"
+    verified: 2026-08-08
+    terms: unstated
+
+content:
+  synthetic: false                     # real trial data
+  ground_truth_model: none
+  subjects: 65
+  rows: 6046
+  analytes: [remifentanil_concentration, eeg_effect]
+  columns: [ID, TIME, AMT, RATE, DV, YTYPE, MDV, AGE, SEX, LBM, TINFCAT]
+  dvid: {1: "concentration", 2: "effect"}
+  censoring: none
+  role: unusable_pending_license
+  caveats:
+    body_weight: "LBM is lean body mass, NOT total body weight — allometric scaling on it is a different model"
+    format: "named .xls but is a comma-separated text file; read it as CSV"
+
+citation: >
+  Minto CF, Schnider TW, Egan TD, et al. Influence of age and gender on the
+  pharmacokinetics and pharmacodynamics of remifentanil. Anesthesiology 1997.
+  PMID 9009935 (model development) and 9009936 (model application).
+
+files:
+  - path: pkpdRemifentanil.xls
+    sha256: 60c8e7d294c3d993c86b81b6ab28a00a3686eb184569b93be8c16e7f41ebcdc1
+
+notes: >
+  BLOCKED ON LICENSING — do not use in any published result until resolved.
+  Aggregation framing does not help here: hosting this file is redistribution of
+  it, and no permission to redistribute has been established.
+  Dropping is not cost-free for this one, unlike warfarin: pharmaceutiq's
+  src/remifentanil_pipeline.py is built on it and it is the corpus's only
+  infusion-dosing PK/PD set with an effect endpoint. Ask first, remove second.
+
+  WHO TO ASK, established 2026-08-08. No CC0 or GPL copy of this data exists that
+  I could find — it is not in nlmixr2data, PKPDdatasets or the DDMoRe mirror. But
+  the same 65 subjects are published by the study's own authors through the Open
+  TCI Initiative: minto_remi.zip contains server/comp_pk/REMI.DAT (the NONMEM PK
+  data, 65 subjects) and server/comp_pd/KE0DATA.TXT (the EEG effect data), an
+  archive of Steven Shafer's PK/PD software server. Verified as the same subjects
+  by matching AGE and LBM per subject id: all 65 agree exactly.
+  Open TCI states no license either, so this is not a clean substitute — but it
+  is a much better party to ask than Simulations Plus, because Minto, Schnider
+  and Shafer are the rights holders in the underlying data and they run Open TCI
+  precisely to share it. Recommended: ask Open TCI for an explicit CC0/CC-BY
+  statement covering the Minto 1997 data, and re-source the file from REMI.DAT
+  once granted. That is the route that ends with this dataset clean rather than
+  merely tolerated.
+  Cite the Minto papers regardless of how redistribution resolves.

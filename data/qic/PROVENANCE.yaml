@@ -1,0 +1,44 @@
+id: qic_phase1
+title: "QIC 2025 phase-1 estimation data (synthetic PK/PD, 3 dose levels + placebo)"
+
+license:
+  spdx: CC0-1.0
+  holder: "Quantum Innovation Challenge"
+  verified: 2026-08-08
+  verified_by: "challenge organisers; data is organiser-generated, so they set the terms"
+  redistribution: permitted
+
+upstream:
+  url: https://www.quantum-challenge.eu/assets/QIC2025-EstDat.csv
+  origin: Quantum Innovation Challenge
+  retrieved: 2026-08-08
+
+content:
+  synthetic: true
+  ground_truth_model: unknown          # organisers hold the generating model
+  subjects: 48
+  rows: 2820
+  analytes: [concentration, biomarker]
+  dose_levels_mg: [1, 3, 10]           # DOSE=0 marks placebo/observation rows
+  columns: [ID, BW, COMED, DOSE, TIME, DV, EVID, MDV, AMT, CMT, DVID]
+  dvid: {1: "compound concentration (mg/L)", 2: "biomarker (ng/mL)"}
+  censoring: none
+  role: training
+
+citation: >
+  Quantum Innovation Challenge 2025, phase-1 estimation dataset.
+  https://www.quantum-challenge.eu/challenge/
+
+files:
+  - path: QIC2025-EstDat.csv
+    sha256: 100f88299a07863869c9179fc0c3c8a42653321189aa0cc1878adc5b086732ce
+
+notes: >
+  Previously served only from quantum-challenge.eu/assets/ and absent from this
+  repository; added here so the CC0 dedication attaches to a file under version
+  control and the whole corpus is checksummed in one place. Carries COMED, which
+  the phase-3 set does not — the two are not column-compatible.
+  CC0 is the deliberate choice for challenge-owned data: it removes the
+  unsettled question of whether model weights trained on copyleft data are a
+  derivative work, which is what makes this set usable for publishable blind
+  evaluation. See LICENSE.md.

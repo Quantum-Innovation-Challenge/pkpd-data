@@ -1,0 +1,58 @@
+LicenseRef-Unresolved-NoProvenance
+==================================
+
+This is NOT a license. It is a placeholder recording that the files it is
+applied to have no licensable provenance at all, so that their status is
+visible in tooling rather than silently assumed.
+
+Files carrying this identifier:
+
+  - data/pk/moxifloxacin/Simulated_Moxifloxacin-PK_diabetic-foot-infections-simdata.csv
+  - data/pk/moxifloxacin/Executable_Moxifloxacin-PK_diabetic-foot-infections_original.mod
+
+Status
+------
+The repository README attributes these to a personal blog post
+(m.blog.naver.com/kimmingul/220803637586), which grants nothing.
+
+The underlying model was traced on 2026-08-08 from evidence inside the control
+stream itself. It names its author ("Sebastian G. Wicha, Freie Universitaet
+Berlin"); its THETAs (CL 12.1, V1 68.1, Q 20.3, V2 44.6 L) reproduce exactly the
+published final estimates for a 70 kg patient; its covariate structure
+(IBW**0.75 on CL, total body weight on V1 and V2) is the published final model;
+and the CSV's 50 subjects match the 50 patients enrolled. The source is:
+
+  Wicha SG, Haak T, Zink K, Kees F, Kloft C, Kees MG. Population
+  pharmacokinetics and target attainment analysis of moxifloxacin in patients
+  with diabetic foot infections. J Clin Pharmacol. 2015;55(6):639-46.
+  doi:10.1002/jcph.464
+
+That resolves the attribution question but NOT the licensing one. An
+identifiable author is not a grant. The status therefore remains unresolved.
+
+Downstream users
+----------------
+Do not assume you may redistribute these files. Do not use them in any
+published result whose data provenance you need to be able to defend.
+
+Resolution
+----------
+One of:
+
+  1. Ask S. G. Wicha (now Universitaet Hamburg) for permission, or for a
+     pointer to the canonical release of the simulated dataset. A named
+     academic author is a tractable ask in a way a blog post never was.
+  2. Find the corresponding DDMoRe Model Repository entry, whose terms of use
+     place entries under CC0-1.0; record the entry URL in PROVENANCE.yaml under
+     upstream.url and relicense the annotation accordingly. Note the files are
+     not in the github.com/dpastoor/ddmore_scraping mirror, and
+     repository.ddmore.foundation returned HTTP 503 when checked 2026-08-08.
+  3. Remove the files.
+
+One caveat for route 1: the control stream reads MOX02_sim.csv, which is not the
+filename shipped here, so the CSV was renamed somewhere in its travels and is not
+guaranteed to be the same simulation the .mod produced.
+
+Until then these files remain tracked as unresolved. tools/check_provenance.py
+reports them without failing the build; that is a deliberate choice to keep the
+state visible, not an endorsement of it.

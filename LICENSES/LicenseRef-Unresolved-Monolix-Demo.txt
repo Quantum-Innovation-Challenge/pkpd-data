@@ -1,0 +1,61 @@
+LicenseRef-Unresolved-Monolix-Demo
+=================================
+
+This is NOT a license. It is a placeholder recording that no license has been
+established for the files it is applied to, so that their status is visible in
+tooling rather than silently assumed.
+
+Files carrying this identifier:
+
+  - data/pk_pd/remifentanil/pkpdRemifentanil.xls
+    https://monolixsuite.slp-software.com/monolix/2024R1/remifentanil-data-set
+
+A second file, data/pk_pd/warfarin/monolix/warfarin_data.txt, carried this
+identifier until 2026-08-08 and was deleted rather than resolved: it was a
+re-encoding of the same study data as the GPL-3.0-or-later warfarin.rda already
+in the corpus, so removing it cost nothing. See
+data/pk_pd/warfarin/nlmixr2data/PROVENANCE.yaml for the column mapping.
+
+Status
+------
+MonolixSuite documentation is proprietary. Whether the demo *datasets* may be
+redistributed by third parties is a separate question, and it has not been
+answered. No grant of redistribution rights is claimed or implied here, and
+none should be inferred from the presence of this file in this repository.
+
+Downstream users
+----------------
+Do not assume you may redistribute this file. Do not include it in any published
+corpus, container image or model-training set whose provenance you need to be
+able to defend.
+
+Resolution
+----------
+Unlike warfarin, remifentanil has no license-clean substitute in this corpus, and
+none was found elsewhere: it is not in nlmixr2data, not in PKPDdatasets, and not
+in the DDMoRe mirror. Two routes, in order of preference:
+
+  1. Ask the Open TCI Initiative (opentci.org). The same 65 subjects are
+     published there by the study's own authors — Minto, Schnider and Shafer —
+     as minto_remi.zip, an archive of Steven Shafer's PK/PD software server
+     containing server/comp_pk/REMI.DAT (PK) and server/comp_pd/KE0DATA.TXT
+     (EEG effect). Verified 2026-08-08 as the same subjects: AGE and LBM match
+     per subject id across all 65. Open TCI states no license either, so this is
+     a better party to ask, not a drop-in replacement. An explicit CC0 or CC-BY
+     statement from them, plus re-sourcing the file from REMI.DAT, ends with this
+     dataset clean.
+  2. Obtain a written statement from Simulations Plus permitting redistribution,
+     record it in the dataset's PROVENANCE.yaml under license.verified_by, and
+     replace this identifier with the granted terms.
+
+Failing both, remove the file — and note that pharmaceutiq's
+src/remifentanil_pipeline.py depends on it, so that is not a free action.
+
+Until then this file remains tracked as unresolved. tools/check_provenance.py
+reports it without failing the build; that is a deliberate choice to keep the
+state visible, not an endorsement of it.
+
+Underlying study, to be cited regardless of how redistribution resolves:
+Minto CF, Schnider TW, Egan TD, et al. Influence of age and gender on the
+pharmacokinetics and pharmacodynamics of remifentanil. Anesthesiology 1997
+(PMID 9009935, 9009936).

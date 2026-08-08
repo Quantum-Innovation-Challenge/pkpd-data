@@ -1,0 +1,59 @@
+id: moxifloxacin
+title: "Moxifloxacin PK in diabetic foot infections"
+
+license:
+  spdx: LicenseRef-Unresolved-NoProvenance
+  holder: "Sebastian G. Wicha et al. (named in the control stream) — no grant given"
+  verified: 2026-08-08
+  verified_by: "none — see LICENSES/LicenseRef-Unresolved-NoProvenance.txt"
+  redistribution: unresolved
+
+upstream:
+  url: https://m.blog.naver.com/kimmingul/220803637586
+  origin: "personal blog post — not a licensable provenance; underlying model
+           traced to Wicha et al. 2015, see notes"
+  retrieved: unknown
+
+content:
+  synthetic: true                      # file is named Simulated_*, with a .mod alongside
+  ground_truth_model: Executable_Moxifloxacin-PK_diabetic-foot-infections_original.mod
+  subjects: 50
+  rows: 680
+  analytes: [moxifloxacin]
+  columns: [ID, TIME, DV, AMT, RATE, MDV, EVID, CMT, WGT, IBW]
+  dose: "400 mg intravenous once daily"
+  censoring: none
+  role: unusable_pending_license
+
+citation: >
+  Wicha SG, Haak T, Zink K, Kees F, Kloft C, Kees MG. Population pharmacokinetics
+  and target attainment analysis of moxifloxacin in patients with diabetic foot
+  infections. J Clin Pharmacol. 2015;55(6):639-46. doi:10.1002/jcph.464
+
+files:
+  - path: Simulated_Moxifloxacin-PK_diabetic-foot-infections-simdata.csv
+    sha256: 503ba3f11e67baaaf82adad214635e4186877f1d8ee79ea1d06d0325485a9c6f
+  - path: Executable_Moxifloxacin-PK_diabetic-foot-infections_original.mod
+    sha256: 72c53cfd5c0e798e4cdd808c0ac3efa340e13a14b7485abf7c4d06c416dce55b
+
+notes: >
+  STILL BLOCKED ON LICENSING — do not use in any published result — but no longer
+  unattributable. TRACED 2026-08-08 from evidence inside the control stream,
+  which the README's blog attribution had obscured:
+    - it names its author, "Sebastian G. Wicha, Freie Universitaet Berlin";
+    - its THETAs (CL 12.1, V1 68.1, Q 20.3, V2 44.6 L) reproduce the published
+      final parameter estimates for a 70 kg patient exactly;
+    - its covariate structure (IBW**0.75 on CL, WGT on V1 and V2) is the
+      published final model;
+    - the CSV has 50 subjects; the study enrolled 50 patients.
+  The source is therefore Wicha et al. 2015 (see citation), not a blog. What is
+  still missing is a GRANT: an author being identifiable is not permission.
+  Two routes now open, in order of preference:
+    1. Ask S. G. Wicha (now Universitaet Hamburg) directly — a named academic
+       author is a far more tractable ask than an unattributed blog post.
+    2. Find the corresponding DDMoRe repository entry, whose terms of use place
+       entries under CC0. Note the files are NOT in the ddmore_scraping mirror,
+       and repository.ddmore.foundation returned HTTP 503 on 2026-08-08.
+  If neither lands, remove the files. Note the .mod reads MOX02_sim.csv, a
+  filename that does not match the CSV shipped here — the CSV was renamed at some
+  point in its travels, so the two are not guaranteed to be the same simulation.

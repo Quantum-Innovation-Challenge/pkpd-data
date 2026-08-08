@@ -1,0 +1,51 @@
+id: warfarin_nlmixr2
+title: "Warfarin PK/PD (O'Reilly & Aggeler 1968), as redistributed by nlmixr2data"
+
+license:
+  spdx: GPL-3.0-or-later
+  holder: "nlmixr2data authors (Matthew Fidler, Wenping Wang, et al.)"
+  verified: 2026-08-08
+  verified_by: "CRAN nlmixr2data DESCRIPTION: License GPL (>= 3)"
+  redistribution: permitted-with-attribution
+
+upstream:
+  url: https://github.com/nlmixr2/nlmixr2data/blob/main/data/warfarin.rda
+  origin: nlmixr2data (CRAN)
+  retrieved: unknown                   # predates provenance tracking
+
+content:
+  synthetic: false
+  ground_truth_model: none
+  subjects: 32
+  rows: 515
+  analytes: [warfarin_concentration, pca]
+  columns: [id, time, amt, dv, dvid, evid, wt, age, sex]
+  dvid: {cp: "warfarin concentration", pca: "prothrombin complex activity"}
+  censoring: none
+  role: development
+
+citation: >
+  O'Reilly RA, Aggeler PM. Studies on coumarin anticoagulant drugs: initiation
+  of warfarin therapy without a loading dose. Circulation 1968;38:169-77.
+
+files:
+  - path: warfarin.rda
+    sha256: 331274f96ee87506c4360c7642f1d625735b6ebd14e5e1b2df5fece355438a51
+
+notes: >
+  GPL-3.0-or-later; development/validation material only, not for publishable
+  blind runs — see the theophylline nlmixr2data record for why.
+  THIS IS NOW THE ONLY WARFARIN COPY IN THE CORPUS. A second copy,
+  ../monolix/warfarin_data.txt (a MonolixSuite demo encoding under an unresolved
+  license), was DELETED 2026-08-08 as redundant. Verified before deleting by
+  reading both: time, wt and age matched row-for-row across all 515 rows, and the
+  differences were purely cosmetic. Anyone who was reading the Monolix encoding
+  can switch to this file with a rename:
+
+    monolix id -> id (ids were 100+, here 1-32)
+    monolix dvid 1/2 -> dvid factor levels cp/pca
+    monolix sex 0/1 -> sex factor levels female/male
+    monolix missing "." on dosing rows -> dv = 0, with evid marking the dose
+
+  This copy additionally carries an explicit evid column, which the deleted one
+  did not. Shapes and the comparison were read from the files, not package docs.

@@ -1,0 +1,52 @@
+id: tcell_mab
+title: "T-cell / monoclonal antibody PK/PD in multiple sclerosis"
+
+license:
+  spdx: CC0-1.0
+  holder: "DDMoRe Foundation model repository contributors"
+  verified: 2026-08-08
+  verified_by: "UNCONFIRMED — assumed repository.ddmore.foundation terms of use"
+  redistribution: permitted
+
+upstream:
+  url: unknown                         # grouped under "DDMoRe Foundation Data and
+                                       # other datasets" with no per-dataset URL
+  origin: "assumed DDMoRe Model Repository (via dpastoor/ddmore_scraping)"
+  retrieved: unknown
+
+content:
+  synthetic: true
+  ground_truth_model: Executable_PKPD_Tcell_mAb_multiplesclerosis.mod
+  subjects: 47
+  rows: 801
+  analytes: [tcell_count]
+  columns: [ID, CENT, PANO, DATE, TIME, DOSE, DV, FLAG, SEX, AGE, WT, HT, BMI,
+            ICL, IV1, IQ, IV2, EVID, CMT, MDV]
+  censoring: none
+  role: validation
+
+citation: unknown
+
+files:
+  - path: Simulated_PKPD_Tcell_mAb_multiplesclerosis.csv
+    sha256: 5549165864e3214ea4996396a8bea6fbc9053d06f706080e6905dcb0cc7ef753
+  - path: Executable_PKPD_Tcell_mAb_multiplesclerosis.mod
+    sha256: 72222f5c0720fa5593f1b80955faecbadf63249e48aeeb7ad0eaf7c78497faeb
+
+notes: >
+  PROVENANCE UNCONFIRMED, and the weakest evidence of the three DDMoRe-assumed
+  sets. Checked 2026-08-08: not in the ddmore_scraping mirror (which does hold a
+  different multiple-sclerosis entry, 223, Novakovic 2016 cladribine — not this
+  one); the control stream carries a run-record header (";; 1. Based on: 43",
+  ";;Date of run 2003-03-13") but names NO author and NO publication, unlike
+  every other .mod in this corpus. So there is nothing here to trace to yet.
+  Next step: the 2003 run date plus the two-compartment PK with additive IIV on
+  Baseline and exponential IIV on EC50 should be enough to identify the study
+  from the pharmacometrics literature; failing that, treat as unresolved rather
+  than CC0 before any published use.
+  The directory name misspells "sclerosis" as "multiplesclerois"; the .mod file
+  spells it correctly. Left as-is because the README and the GitHub URL in it
+  both point at the misspelled path — rename it in a change of its own if at all.
+  Individual PK parameters (ICL, IV1, IQ, IV2) are carried per subject, so the
+  generating parameters are recoverable per individual, not only per population.
+  Used by no solution repo.

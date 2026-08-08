@@ -1,0 +1,41 @@
+# data/<group>/<dataset>/PROVENANCE.yaml
+# One per dataset directory. Machine-readable; MANIFEST.yaml aggregates these.
+# Every field is required — "unknown" is a valid value, guessing is not.
+
+id: bedaquiline                      # matches MANIFEST.yaml dataset id
+title: "Bedaquiline / M2 PK with LPV-RTV drug-drug interaction"
+
+license:
+  spdx: CC0-1.0                      # SPDX id, or LicenseRef-Unresolved-* 
+  holder: "DDMoRe Foundation model repository contributors"
+  verified: 2026-08-08               # date the license was checked at source
+  verified_by: "repository.ddmore.foundation terms of use"
+  redistribution: permitted          # permitted | permitted-with-attribution
+                                     #   | unresolved | prohibited
+
+upstream:
+  url: https://github.com/dpastoor/ddmore_scraping/tree/master/219
+  origin: DDMoRe Model Repository
+  retrieved: 2026-03-18
+
+content:
+  synthetic: true                    # simulated from a known model?
+  ground_truth_model: Executable_BDQ_M2_PK_DDI_with_LPV-RTV.mod
+  subjects: 16
+  analytes: [TMC207, M2, LPV, RTV]
+  censoring: {bql_column: BQL, lloq_column: LLOQ, n_censored: 114}
+
+citation: >
+  Svensson EM, et al. Model-based estimates of the effects of efavirenz on
+  bedaquiline pharmacokinetics. Antimicrob Agents Chemother. 2013.
+
+files:
+  - path: Simulated_data_BDQ_M2_PK_DDI_with_LPV-RTV.csv
+    sha256: null                     # filled by tools/checksums.py
+  - path: Executable_BDQ_M2_PK_DDI_with_LPV-RTV.mod
+    sha256: null
+
+notes: >
+  Multi-analyte with real BQL censoring — the only dataset in the corpus
+  exercising either capability. None of the three solution repos handle them
+  as of the pre-kubeflow baseline.

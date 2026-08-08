@@ -1,0 +1,56 @@
+id: theophylline_ggpmx
+title: "Theophylline PK test data plus a fitted Monolix reference NLME fit (ggPMX)"
+
+license:
+  spdx: GPL-2.0-only
+  holder: "Novartis Pharma AG and ggPMX contributors"
+  verified: 2026-08-08
+  verified_by: "CRAN ggPMX DESCRIPTION: License GPL-2 (not 'or later')"
+  redistribution: permitted-with-attribution
+
+upstream:
+  url: https://github.com/ggPMXdevelopment/ggPMX/tree/master/inst/testdata/theophylline
+  origin: ggPMX R package test data
+  retrieved: unknown                   # predates provenance tracking
+
+content:
+  synthetic: false
+  ground_truth_model: none             # Monolix/ holds a fitted model, not a generating one
+  subjects: 50
+  rows: {data_pk.csv: 600, sim.csv: 11000}
+  analytes: [theophylline]
+  columns: [ID, TIME, AMT, Y, EVID, WT0, AGE0, SEX, STUD]
+  censoring: none
+  role: reference_fit                  # see notes — Monolix/ is NOT input data
+
+citation: >
+  ggPMX package test data, (c) Novartis Pharma AG. Underlying model:
+  oral1_project.mlxtran (Monolix), fitted by SAEM.
+
+files:
+  - path: data_pk.csv
+    sha256: 8cc0e34dbbd9009b9a8280ba712231abe936ad7fde8ce22655866bb878434ba2
+  - path: sim.csv
+    sha256: d833aa40a41677dd6c09a6aa38da0266164be2a0a9759a39b8dad86024b73ca1
+  - path: Monolix/estimates.txt
+    sha256: 6803dc05da398e7816035229f38732ba014d907b6a62f5e16b3ffd4b65d36357
+  - path: Monolix/finegrid.txt
+    sha256: 68fae01e5885f372cc0e11759a6b3240c4f78d1680e827508581865eab717128
+  - path: Monolix/indiv_eta.txt
+    sha256: b93340c679ee061f6efb05234151260c4f88d3eea526d444406dcbc7208a0886
+  - path: Monolix/pop_parameters.txt
+    sha256: 3baee53da2b6584651028ed97db9cfd498ec8967b67c9414f1aa9fdf8fc9190d
+  - path: Monolix/predictions.txt
+    sha256: 50cea90daa66153c54b918343504532be736ac6d04aacc5f3fd251f3732cae80
+  - path: Monolix/ChartsData/Saem/CvParam.txt
+    sha256: 1f13039101bafd260faa0072d5908ffefc6b069160d1f55c54b7ddc0f847c67e
+
+notes: >
+  GPL-2.0-ONLY — incompatible with GPL-3 and with Apache-2.0 in a combined work.
+  Fine as aggregation; do NOT vendor into qic-pkpd-core (Apache-2.0) or into any
+  GPL-3 work, and keep it apart from the GPL-3 nlmixr2data theophylline.
+  The Monolix/ subdirectory is a fitted NLME reference — pop_parameters,
+  estimates, indiv_eta, predictions, finegrid, plus SAEM convergence traces under
+  ChartsData/. It is model OUTPUT, not input data; loading it as a cohort is a
+  category error. It is the reference-fit arm of the validation tier.
+  One dataset spanning three directory levels, hence one record covering the tree.

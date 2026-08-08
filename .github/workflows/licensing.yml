@@ -1,0 +1,36 @@
+name: licensing
+
+# Three gates, in increasing order of how easy they are to break by accident:
+#   1. reuse lint      — every file has declared licensing
+#   2. provenance      — every dataset directory has a complete PROVENANCE.yaml
+#   3. checksums       — no data file changed content without saying so
+# Unresolved licenses are reported, not failed: they are a tracked state, not a
+# regression. See LICENSE.md.
+
+on:
+  push:
+    branches: [main, kubeflow]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  licensing:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install tooling
+        run: pip install reuse pyyaml
+
+      - name: REUSE compliance
+        run: reuse lint
+
+      - name: Provenance records complete
+        run: python tools/check_provenance.py
+
+      - name: Checksums match
+        run: sha256sum --check --strict CHECKSUMS.sha256

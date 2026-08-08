@@ -1,0 +1,57 @@
+id: semimech_antibiotics
+title: "Semi-mechanistic PK/PD model of antibiotic effect on bacterial growth"
+
+license:
+  spdx: CC0-1.0
+  holder: "DDMoRe Foundation model repository contributors"
+  verified: 2026-08-08
+  verified_by: "UNCONFIRMED — assumed repository.ddmore.foundation terms of use"
+  redistribution: permitted
+
+upstream:
+  url: unknown                         # grouped under "DDMoRe Foundation Data and
+                                       # other datasets" with no per-dataset URL
+  origin: "assumed DDMoRe Model Repository (via dpastoor/ddmore_scraping)"
+  retrieved: unknown
+
+content:
+  synthetic: true
+  ground_truth_model: Executable_semimech_PKPD_antibiotics_original.mod
+  subjects: 23                         # experimental arms (ID)
+  rows: 3251
+  analytes: [drug_concentration, bacterial_count]
+  columns: [ID, C, TYPE, EVID, CMT, TIME, DV, AMT, L2, DIL]
+  format_note: "NONMEM $TABLE output — skip the 'TABLE NO.  1' preamble line before the header"
+  censoring: none
+  role: validation
+
+citation: >
+  Nielsen EI, Viberg A, Lowdin E, Cars O, Karlsson MO, Sandstrom M.
+  Semimechanistic pharmacokinetic/pharmacodynamic model for assessment of
+  activity of antibacterial agents from time-kill curve experiments.
+  Antimicrob Agents Chemother. 2007;51(1):128-36. doi:10.1128/AAC.00604-06
+  (named in the control stream's $PROBLEM line: "NIELSEN 2007
+  semimech_PKPD_antibiotics")
+
+files:
+  - path: Simulated_semimech_PKPD_antibiotics.tab
+    sha256: fa628c80ae3f2ace585852ef7d31660f53ab7ff6194464ce7f336c2212471d16
+  - path: Executable_semimech_PKPD_antibiotics_original.mod
+    sha256: 36756251cd74fe79fd19928bd61017926fa7aae697dd920dac7a1d0840183738
+
+notes: >
+  PROVENANCE UNCONFIRMED as to the DDMoRe entry, but the SOURCE STUDY is now
+  identified (2026-08-08) from the control stream's own $PROBLEM line, and the
+  model structure corroborates it: COMP=(S) growing susceptible and COMP=(R)
+  resting insensitive bacterial subpopulations are exactly the two-subpopulation
+  design of Nielsen 2007. Unlike ciprofloxacin, these files are NOT in the
+  ddmore_scraping mirror, so the CC0 annotation still rests on naming convention.
+  Note the same first author (Nielsen) and group (Uppsala, Karlsson/Friberg)
+  connect this to the confirmed-CC0 ciprofloxacin entry — weak corroboration that
+  both arrived by the same route, not proof.
+  These two files previously sat loose in data/pk_pd/ alongside the dataset
+  subdirectories. Moved into their own directory so a per-directory
+  PROVENANCE.yaml can cover them without a record at data/pk_pd/ silently
+  adopting any future dataset added there without one.
+  The only .tab (NONMEM table) file in the corpus, and the only one needing the
+  preamble skip.
